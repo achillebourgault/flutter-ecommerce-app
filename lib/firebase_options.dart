@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCCH-GoN3GO8XfcQ7bjOjAFiCvfiUb_6Zk',
-    appId: '1:477058641131:android:5e3241692360e5aa7c62ae',
+    appId: '1:477058641131:android:30b1e767f7df46b87c62ae',
     messagingSenderId: '477058641131',
     projectId: 'flutter-ecommerce-api',
     storageBucket: 'flutter-ecommerce-api.appspot.com',
@@ -62,11 +62,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBkbLPLaplVcad2z3cU2huxQbNEtyYn0lc',
-    appId: '1:477058641131:ios:b7126acc64d4f60f7c62ae',
+    appId: '1:477058641131:ios:f1bb00b41714348c7c62ae',
     messagingSenderId: '477058641131',
     projectId: 'flutter-ecommerce-api',
     storageBucket: 'flutter-ecommerce-api.appspot.com',
-    iosBundleId: 'com.example.ecommerceApp',
+    iosBundleId: 'fr.imnibis.EcommerceApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
