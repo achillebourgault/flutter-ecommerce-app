@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "477058641131",
-    "project_id": "flutter-ecommerce-api",
-    "storage_bucket": "flutter-ecommerce-api.appspot.com"
+    "project_number": "332358911795",
+    "project_id": "ecommerce-storage-api",
+    "storage_bucket": "ecommerce-storage-api.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:477058641131:android:5e3241692360e5aa7c62ae",
+        "mobilesdk_app_id": "1:332358911795:android:7f7ffc5a6a14ece5cde046",
         "android_client_info": {
-          "package_name": "com.example.ecommerce_app"
+          "package_name": "fr.imnibis.ecommerce_app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCCH-GoN3GO8XfcQ7bjOjAFiCvfiUb_6Zk"
+          "current_key": "AIzaSyBSBuCLR1ktXYbOBZqRbW-AJW2VIW1xvm8"
         }
       ],
       "services": {
