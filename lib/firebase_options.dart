@@ -44,37 +44,37 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyD3sqGKEKX-VuatQmNQrEmhi6FOkVQRV7A',
-    appId: '1:477058641131:web:ae4529052a39ed497c62ae',
-    messagingSenderId: '477058641131',
-    projectId: 'flutter-ecommerce-api',
-    authDomain: 'flutter-ecommerce-api.firebaseapp.com',
-    storageBucket: 'flutter-ecommerce-api.appspot.com',
+    apiKey: 'AIzaSyDa5uoQ6dn41ytcT2jEdHOm6v-E_3snr_c',
+    appId: '1:332358911795:web:0af593b03fe12912cde046',
+    messagingSenderId: '332358911795',
+    projectId: 'ecommerce-storage-api',
+    authDomain: 'ecommerce-storage-api.firebaseapp.com',
+    storageBucket: 'ecommerce-storage-api.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCCH-GoN3GO8XfcQ7bjOjAFiCvfiUb_6Zk',
-    appId: '1:477058641131:android:30b1e767f7df46b87c62ae',
-    messagingSenderId: '477058641131',
-    projectId: 'flutter-ecommerce-api',
-    storageBucket: 'flutter-ecommerce-api.appspot.com',
+    apiKey: 'AIzaSyBSBuCLR1ktXYbOBZqRbW-AJW2VIW1xvm8',
+    appId: '1:332358911795:android:7f7ffc5a6a14ece5cde046',
+    messagingSenderId: '332358911795',
+    projectId: 'ecommerce-storage-api',
+    storageBucket: 'ecommerce-storage-api.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBkbLPLaplVcad2z3cU2huxQbNEtyYn0lc',
-    appId: '1:477058641131:ios:f1bb00b41714348c7c62ae',
-    messagingSenderId: '477058641131',
-    projectId: 'flutter-ecommerce-api',
-    storageBucket: 'flutter-ecommerce-api.appspot.com',
+    apiKey: 'AIzaSyCruo-FDAa1JjaU0hokCuRKWCbxPEYNvwE',
+    appId: '1:332358911795:ios:65b2a90fd4bc467ccde046',
+    messagingSenderId: '332358911795',
+    projectId: 'ecommerce-storage-api',
+    storageBucket: 'ecommerce-storage-api.appspot.com',
     iosBundleId: 'fr.imnibis.EcommerceApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBkbLPLaplVcad2z3cU2huxQbNEtyYn0lc',
-    appId: '1:477058641131:ios:799b6a53519a13ab7c62ae',
-    messagingSenderId: '477058641131',
-    projectId: 'flutter-ecommerce-api',
-    storageBucket: 'flutter-ecommerce-api.appspot.com',
+    apiKey: 'AIzaSyCruo-FDAa1JjaU0hokCuRKWCbxPEYNvwE',
+    appId: '1:332358911795:ios:7073bb347adc543acde046',
+    messagingSenderId: '332358911795',
+    projectId: 'ecommerce-storage-api',
+    storageBucket: 'ecommerce-storage-api.appspot.com',
     iosBundleId: 'com.example.ecommerceApp.RunnerTests',
   );
 }
