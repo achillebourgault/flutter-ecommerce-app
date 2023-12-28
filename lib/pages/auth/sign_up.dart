@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../home.dart';
 import 'sign_up_details.dart';
 import 'sign_in.dart';
 
@@ -18,6 +19,12 @@ class SignUpPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Sign Up'),
         backgroundColor: mainColor,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          ),
+        ),
       ),
       body: Container(
         color: Colors.black,

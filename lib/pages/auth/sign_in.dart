@@ -17,6 +17,12 @@ class SignInPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Sign In'),
         backgroundColor: mainColor,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // Go to home page
+          onPressed: () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          ),
+        ),
       ),
       body: Container(
         color: Colors.black,

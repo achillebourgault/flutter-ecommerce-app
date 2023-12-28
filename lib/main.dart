@@ -6,7 +6,7 @@ import 'package:redux/redux.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart'; // Assure-toi que ce fichier est correctement importé
 
-void main() {
+void main() async {
   final shopItemStore = Store<ShopItemState>(
     shopItemReducer,
     initialState: ShopItemState(items: []),

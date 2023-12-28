@@ -8,6 +8,11 @@ import 'auth/sign_up_details.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   void _navigateUser(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userID');
@@ -34,11 +39,6 @@ class HomePage extends StatefulWidget {
     }
   }
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +77,6 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   InkWell(
                     onTap: () {
-                      // Remove userID & signUpEditingMode from shared preferences
                       SharedPreferences.getInstance().then((prefs) {
                         prefs.remove('userID');
                         prefs.remove('signUpEditingMode');
