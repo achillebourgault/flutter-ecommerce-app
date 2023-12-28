@@ -1,9 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/home/carousel.dart';
 import 'package:ecommerce_app/widgets/home/category_buttons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'auth/sign_in.dart';
+import 'auth/sign_up_details.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  void _navigateUser(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userID');
+    bool signUpEditingMode = prefs.getBool('signUpEditingMode') ?? false;
+
+    if (userId != null && userId.isNotEmpty) {
+      if (signUpEditingMode) {
+        // Rediriger l'utilisateur vers SignupDetails
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => SignupDetails()),
+        );
+      } else {
+        // L'utilisateur est connecté et signUpEditingMode est false
+        // Rediriger vers HomePage (ou une autre page, selon la logique de l'application)
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      }
+    } else {
+      // Pas d'utilisateur connecté, naviguer vers SignInPage
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => SignInPage()),
+      );
+    }
+  }
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -24,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         child: Row(
           children: <Widget>[
             Expanded(
@@ -46,54 +75,25 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  InteractiveIcon(icon: Icons.shopping_cart),
-                  InteractiveIcon(icon: Icons.person),
+                  InkWell(
+                    onTap: () {
+                      // Remove userID & signUpEditingMode from shared preferences
+                      SharedPreferences.getInstance().then((prefs) {
+                        prefs.remove('userID');
+                        prefs.remove('signUpEditingMode');
+                      });
+                    },
+                    child: const Icon(Icons.shopping_cart, color: Colors.black),
+                  ),
+                  InkWell(
+                    onTap: () => _navigateUser(context),
+                    child: const Icon(Icons.person, color: Colors.black),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class InteractiveIcon extends StatefulWidget {
-  final IconData icon;
-
-  const InteractiveIcon({Key? key, required this.icon}) : super(key: key);
-
-  @override
-  _InteractiveIconState createState() => _InteractiveIconState();
-}
-
-class _InteractiveIconState extends State<InteractiveIcon> {
-  Color _iconColor = Colors.black;
-  Color _backgroundColor = Colors.grey[200]!;
-
-  void _updateColorOnHover(bool isHovering) {
-    setState(() {
-      if (isHovering) {
-        _iconColor = Colors.white;
-        _backgroundColor = Colors.blue;
-      } else {
-        _iconColor = Colors.black;
-        _backgroundColor = Colors.grey[200]!;
-      }
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onHover: _updateColorOnHover,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: _backgroundColor,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(widget.icon, color: _iconColor),
       ),
     );
   }
