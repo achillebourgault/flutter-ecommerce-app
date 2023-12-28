@@ -1,7 +1,6 @@
+import 'package:ecommerce_app/widgets/home/carousel.dart';
 import 'package:ecommerce_app/widgets/home/category_buttons.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/common/product_tile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,24 +9,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget> [
-            CategoryButtons(),
-            Container(
-              height: 200.0,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: const <Widget> [
-                  ProductTile(),
-                  ProductTile(),
-                  ProductTile(),
-                  ProductTile(),
-                ],
-              ),
-            ),
-          ],
-        )
-      ),
+        child: ListView(
+            children: const <Widget> [
+              CategoryButtons(),
+              Carousel(categoryName: "men's clothing"),
+              Carousel(categoryName: "women's clothing"),
+              Carousel(categoryName: "jewelery"),
+              Carousel(categoryName: "electronics"),
+            ],
+          ),
+        ),
       bottomNavigationBar: const BottomAppBar(
         child: Center(
           child: TextField(
