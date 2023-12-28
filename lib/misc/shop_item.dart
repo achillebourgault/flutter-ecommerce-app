@@ -30,16 +30,10 @@ class ShopItem {
   }
 
   static Future<List<ShopItem>> getItems() async {
+    
     var url = Uri.parse("http://15.237.20.86:3000/v2/products/getAll");
     final response = await http.get(url, headers: {"Content-Type": "application/json"});
     final List body = json.decode(response.body);
     return body.map((e) => ShopItem.fromJson(e)).toList();
-  }
-
-  static Future<ShopItem> getItem(String id) async {
-    var url = Uri.parse("http://15.237.20.86:3000/v2/products/details/$id");
-    final response = await http.get(url, headers: {"Content-Type": "application/json"});
-    final Map<String, dynamic> body = json.decode(response.body);
-    return ShopItem.fromJson(body);
   }
 }
