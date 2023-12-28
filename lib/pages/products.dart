@@ -29,10 +29,12 @@ class ProductsPage extends StatelessWidget {
           builder: (BuildContext context, List<ShopItem> shopItems) {
             // Build the UI based on the retrieved list of ShopItems
             return GridView.builder(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 0.8,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
               ),
               itemBuilder: (BuildContext context, int index) {
                 return index < shopItems.length ? ProductTile(id: shopItems[index].id) : null;
