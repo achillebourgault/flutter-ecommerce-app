@@ -37,7 +37,7 @@ class ProductsPage extends StatelessWidget {
                 mainAxisSpacing: 10.0,
               ),
               itemBuilder: (BuildContext context, int index) {
-                return index < shopItems.length ? ProductTile(id: shopItems[index].id) : null;
+                return index < shopItems.length ? ProductTile(id: shopItems[index].id, isHomePage: false) : null;
               },
             );
           },
