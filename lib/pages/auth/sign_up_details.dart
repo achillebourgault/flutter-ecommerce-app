@@ -60,7 +60,7 @@ class _SignupDetailsState extends State<SignupDetails> {
       var response = await dio.post(uri, data: {
         'fullname': nameController.text,
         'profilePicture': 'test',
-        'isAdmin': isAdmin.toString(),
+        'isAdmin': isAdmin,
       });
 
       if (response.statusCode == 200) {

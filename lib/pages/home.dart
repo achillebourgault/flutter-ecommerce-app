@@ -4,6 +4,7 @@ import 'package:ecommerce_app/widgets/home/category_buttons.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth/sign_in.dart';
 import 'auth/sign_up_details.dart';
+import 'package:ecommerce_app/pages/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         // L'utilisateur est connecté et signUpEditingMode est false
         // Rediriger vers HomePage (ou une autre page, selon la logique de l'application)
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(builder: (context) => const ProfilePage()),
         );
       }
     } else {
