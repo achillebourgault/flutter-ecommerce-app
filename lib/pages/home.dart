@@ -64,7 +64,7 @@ class InteractiveIcon extends StatefulWidget {
   const InteractiveIcon({Key? key, required this.icon}) : super(key: key);
 
   @override
-  _InteractiveIconState createState() => _InteractiveIconState();
+  State<InteractiveIcon> createState() => _InteractiveIconState();
 }
 
 class _InteractiveIconState extends State<InteractiveIcon> {
