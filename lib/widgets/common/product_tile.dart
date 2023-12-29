@@ -7,9 +7,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductTile extends StatefulWidget {
-  const ProductTile({Key? key, required this.id}) : super(key: key);
+  const ProductTile({Key? key, required this.id, required this.isHomePage}) : super(key: key);
 
   final String id;
+  final bool isHomePage;
 
   @override
   State<ProductTile> createState() => _ProductTileState();
@@ -38,14 +39,14 @@ class _ProductTileState extends State<ProductTile> {
               child: InkWell(
                 onTap: () {
                   if (item != null) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailPage(item: item)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailPage(item: item, fromRoute: widget.isHomePage ? "home" : "products",)));
                   }
                 },
                 child: Column(
                   children: <Widget>[
                     Hero(
-                      tag: item?.id ?? widget.id,
-                      child: ProductImage(imageUrl: item?.imageUrl)
+                      tag: "${item?.id ?? widget.id}_${widget.isHomePage ? "home" : "products"}",
+                      child: ProductImage(imageUrl: item?.imageUrl),
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 5.0, right: 5.0),

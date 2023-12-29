@@ -46,7 +46,7 @@ class _CarouselState extends State<Carousel> {
                     padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
-                      return ProductTile(id: items[index].id);
+                      return ProductTile(id: items[index].id, isHomePage: true);
                     },
                   );
                 } else {

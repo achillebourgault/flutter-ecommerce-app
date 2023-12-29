@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ShopItem item;
+  final String fromRoute;
 
-  const ProductDetailPage({Key? key, required this.item}) : super(key: key);
+  const ProductDetailPage({Key? key, required this.item, required this.fromRoute}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class ProductDetailPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Hero(
-                tag: item.id,
+                tag: '${item.id}_$fromRoute',
                 child: ProductImage(imageUrl: item.imageUrl),
               ),
             ),
