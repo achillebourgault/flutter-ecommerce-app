@@ -38,8 +38,8 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
       appBar: AppBar(
         title: Text('Users'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminIndexPage()))
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminIndexPage()))
         ),
       ),
       body: isLoading
@@ -51,13 +51,13 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
           return Card(
             child: ListTile(
               leading: CircleAvatar(
-                backgroundImage: NetworkImage(user['profilePicture']),
+                backgroundImage: NetworkImage(user['profilePicture'] ?? ''), // Added null check here
               ),
               title: Row(
                 children: [
-                  Text(user['fullname']),
+                  Text(user['fullname'] ?? 'Unknown'), // Added null check here
                   SizedBox(width: 8),
-                  if (user['isAdmin'])
+                  if (user['isAdmin'] == true) // Updated condition
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                       color: Colors.red,
@@ -65,7 +65,7 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
                     ),
                 ],
               ),
-              subtitle: Text(user['isAdmin'] ? 'Admin' : 'User'),
+              subtitle: Text(user['isAdmin'] == true ? 'Admin' : 'User'), // Updated condition
             ),
           );
         },
