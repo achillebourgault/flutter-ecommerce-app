@@ -1,10 +1,15 @@
+import 'package:ecommerce_app/misc/shop_item.dart';
+import 'package:ecommerce_app/redux/store.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/home/carousel.dart';
 import 'package:ecommerce_app/widgets/home/category_buttons.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth/sign_in.dart';
 import 'auth/sign_up_details.dart';
 import 'package:ecommerce_app/pages/profile.dart';
+
+import 'cart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     if (userId != null && userId.isNotEmpty) {
       if (signUpEditingMode) {
         // Rediriger l'utilisateur vers SignupDetails
-        Navigator.of(context).pushReplacement(
+        Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => SignupDetails()),
         );
       } else {
@@ -34,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       }
     } else {
       // Pas d'utilisateur connecté, naviguer vers SignInPage
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => SignInPage()),
       );
     }
@@ -42,8 +47,36 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const CartPage()),
+              );
+            },
+            icon: StoreConnector<ShopState, List<ShopItem>>(
+              converter: (store) => store.state.cart,
+              builder: (context, items) =>
+                items.isNotEmpty
+                  ? Badge.count(
+                    count: items.length,
+                    child: const Icon(Icons.shopping_cart),
+                  )
+                  : const Icon(Icons.shopping_cart),
+            ),
+          ),
+          IconButton(
+            onPressed: () => _navigateUser(context),
+            icon: const Icon(Icons.person),
+          ),
+        ],
+      ),
       body: SafeArea(
+        bottom: false,
         child: ListView(
           children: const <Widget>[
             CategoryButtons(),
@@ -51,47 +84,6 @@ class _HomePageState extends State<HomePage> {
             Carousel(categoryName: "women's clothing"),
             Carousel(categoryName: "jewelery"),
             Carousel(categoryName: "electronics"),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 8,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  prefixIcon: Icon(Icons.search),
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  InkWell(
-                    onTap: () {
-                      SharedPreferences.getInstance().then((prefs) {
-                        prefs.remove('userID');
-                        prefs.remove('signUpEditingMode');
-                      });
-                    },
-                    child: const Icon(Icons.shopping_cart, color: Colors.black),
-                  ),
-                  InkWell(
-                    onTap: () => _navigateUser(context),
-                    child: const Icon(Icons.person, color: Colors.black),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),

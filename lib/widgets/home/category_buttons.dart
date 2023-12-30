@@ -12,20 +12,20 @@ class CategoryButtons extends StatelessWidget {
         Row(
           children: <Widget> [
             Expanded(
-              child: ItemCategoryButton(categoryName: "Men's clothing"),
+              child: ItemCategoryButton(name: "Men's clothing", icon: Icons.male),
             ),
             Expanded(
-              child: ItemCategoryButton(categoryName: "Women's clothing"),
+              child: ItemCategoryButton(name: "Women's clothing", icon: Icons.female),
             )
           ],
         ),
         Row(
           children: <Widget> [
             Expanded(
-              child: ItemCategoryButton(categoryName: "Jewelery"),
+              child: ItemCategoryButton(name: "Jewelery", icon: Icons.diamond),
             ),
             Expanded(
-              child: ItemCategoryButton(categoryName: "Electronics"),
+              child: ItemCategoryButton(name: "Electronics", icon: Icons.electrical_services),
             )
           ],
         )

@@ -1,6 +1,9 @@
 import 'package:ecommerce_app/misc/shop_item.dart';
+import 'package:ecommerce_app/pages/cart.dart';
+import 'package:ecommerce_app/redux/store.dart';
 import 'package:ecommerce_app/widgets/common/product_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ShopItem item;
@@ -62,7 +65,19 @@ class ProductDetailPage extends StatelessWidget {
             const SizedBox(width: 16.0),
             ElevatedButton(
               onPressed: () {
-                // TODO: Implement add to cart functionality
+                StoreProvider.of<ShopState>(context).dispatch(AddToCartAction(item));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Added to cart'),
+                    duration: const Duration(seconds: 1),
+                    action: SnackBarAction(
+                      label: 'View Cart',
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const CartPage()));
+                      },
+                    )
+                  ),
+                );
               },
               child: const Text('Add to Cart'),
             ),

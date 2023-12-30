@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/misc/shop_item.dart';
-import 'package:ecommerce_app/redux/shop_items.dart';
+import 'package:ecommerce_app/redux/store.dart';
 import 'package:ecommerce_app/widgets/common/product_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -17,8 +17,8 @@ class ProductsPage extends StatelessWidget {
         title: Text('Products${filter != null ? ' - $filter' : ''}'),
       ),
       body: SafeArea(
-        child: StoreConnector<ShopItemState, List<ShopItem>>(
-          converter: (Store<ShopItemState> store) {
+        child: StoreConnector<ShopState, List<ShopItem>>(
+          converter: (Store<ShopState> store) {
             if (filter == null) {
               // Retrieve the list of ShopItems
               return store.state.items;
