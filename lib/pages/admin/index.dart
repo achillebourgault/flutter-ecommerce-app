@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/pages/admin/products/index.dart';
+import 'package:ecommerce_app/pages/admin/users/index.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -6,7 +8,7 @@ import 'dart:convert';
 import '../home.dart';
 import '../profile.dart';
 
-const mainColor = Color(0xFF151026);
+const mainColor = Colors.white70;
 
 class AdminIndexPage extends StatefulWidget {
   const AdminIndexPage({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class AdminIndexPage extends StatefulWidget {
 
 class _AdminIndexPageState extends State<AdminIndexPage> {
   int productCount = 0;
+  int userCount = 0; // Add userCount
   bool isLoading = true;
   String adminName = 'Admin';
 
@@ -24,6 +27,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
   void initState() {
     super.initState();
     _getProductCount();
+    _getUserCount(); // Add getUserCount
     _getAdminName();
   }
 
@@ -32,6 +36,16 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
     if (response.statusCode == 200) {
       setState(() {
         productCount = json.decode(response.body).length;
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _getUserCount() async { // Add getUserCount
+    var response = await http.get(Uri.parse('http://15.237.20.86:3000/auth/getUsersDetails'));
+    if (response.statusCode == 200) {
+      setState(() {
+        userCount = json.decode(response.body).length;
         isLoading = false;
       });
     }
@@ -55,9 +69,9 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
   Widget _buildStatCard(String title, int count, VoidCallback onTap) {
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(15),
       child: Card(
         color: mainColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
           child: Stack(
@@ -71,8 +85,8 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                       title,
                       style: TextStyle(
                         fontSize: 21,
-                        fontWeight: FontWeight.w100,
-                        color: Colors.white70, // Light text for the title
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
                     ),
                     Divider(
@@ -85,7 +99,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                         fontSize: 42,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
-                        color: Colors.white70, // Light text for the number
+                        color: Colors.black87, // Light text for the number
                       ),
                     ),
                   ],
@@ -98,7 +112,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white70, // Light text for the "Tap to manage"
+                    color: Colors.black87, // Light text for the "Tap to manage"
                   ),
                 ),
               ),
@@ -112,36 +126,35 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87, // Dark background for the scaffold
       appBar: AppBar(
-        backgroundColor: Colors.black87, // Dark background for the app bar
-        title: const Text('Admin Area', style: TextStyle(color: Colors.white70)), // Light text for the app bar
+        title: const Text('Admin Area', style: TextStyle(color: Colors.black87)), // Light text for the app bar
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white70), // Light icon for the app bar
+          icon: Icon(Icons.arrow_back, color: Colors.black87), // Light icon for the app bar
           onPressed: () => Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const ProfilePage()),
           ),
         ),
       ),
       body: Container(
-        color: Colors.black87,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: ListView(
             children: [
               Text(
                 'Welcome $adminName',
-                style: TextStyle(fontSize: 22, fontStyle: FontStyle.italic, fontWeight: FontWeight.w100, color: Colors.white70), // Light text for the welcome message
+                style: TextStyle(fontSize: 22, fontStyle: FontStyle.italic, fontWeight: FontWeight.w100, color: Colors.black87),
               ),
               const SizedBox(height: 20),
               isLoading
-                  ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white70))) // Light loading indicator
+                  ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white70)))
                   : _buildStatCard('Products', productCount, () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminProductsIndex()));
               }),
               const SizedBox(height: 20),
-              _buildStatCard('Users', 42, () {
-                // Actions pour les utilisateurs
+              isLoading
+                  ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white70)))
+                  : _buildStatCard('Users', userCount, () { // Update userCount
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminUsersPage()));
               }),
             ],
           ),
