@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../home.dart';
 import '../profile.dart';
 
 const mainColor = Colors.white70;
@@ -19,7 +18,7 @@ class AdminIndexPage extends StatefulWidget {
 
 class _AdminIndexPageState extends State<AdminIndexPage> {
   int productCount = 0;
-  int userCount = 0; // Add userCount
+  int userCount = 0;
   bool isLoading = true;
   String adminName = 'Admin';
 
@@ -27,7 +26,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
   void initState() {
     super.initState();
     _getProductCount();
-    _getUserCount(); // Add getUserCount
+    _getUserCount();
     _getAdminName();
   }
 
@@ -41,7 +40,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
     }
   }
 
-  Future<void> _getUserCount() async { // Add getUserCount
+  Future<void> _getUserCount() async {
     var response = await http.get(Uri.parse('http://15.237.20.86:3000/auth/getUsersDetails'));
     if (response.statusCode == 200) {
       setState(() {
@@ -92,14 +91,14 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                     Divider(
                         color: Color.fromARGB(61, 127, 151, 255),
                         thickness: 2.5,
-                    ), // Light divider line
+                    ),
                     Text(
                       '$count',
                       style: TextStyle(
                         fontSize: 42,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
-                        color: Colors.black87, // Light text for the number
+                        color: Colors.black87,
                       ),
                     ),
                   ],
@@ -112,7 +111,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87, // Light text for the "Tap to manage"
+                    color: Colors.black87,
                   ),
                 ),
               ),
@@ -127,9 +126,9 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Admin Area', style: TextStyle(color: Colors.black87)), // Light text for the app bar
+        title: const Text('Admin Area', style: TextStyle(color: Colors.black87)),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black87), // Light icon for the app bar
+          icon: Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: () => Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const ProfilePage()),
           ),
@@ -161,18 +160,18 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black87, // Dark background for the bottom app bar
+        color: Colors.black87,
         child: Row(
           children: <Widget>[
             Expanded(
               flex: 8,
               child: TextField(
-                style: TextStyle(color: Colors.white70), // Light text for the text field
+                style: TextStyle(color: Colors.white70),
                 decoration: InputDecoration(
                   hintText: "Search",
-                  hintStyle: TextStyle(color: Colors.white70), // Light hint text for the text field
-                  prefixIcon: Icon(Icons.search, color: Colors.white70), // Light icon for the text field
-                  fillColor: Colors.black54, // Dark fill for the text field
+                  hintStyle: TextStyle(color: Colors.white70),
+                  prefixIcon: Icon(Icons.search, color: Colors.white70),
+                  fillColor: Colors.black54,
                   filled: true,
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
@@ -186,8 +185,8 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Icon(Icons.shopping_cart, color: Colors.white70), // Light icon for shopping cart
-                  Icon(Icons.person, color: Colors.white70), // Light icon for person
+                  Icon(Icons.shopping_cart, color: Colors.white70),
+                  Icon(Icons.person, color: Colors.white70),
                 ],
               ),
             ),
