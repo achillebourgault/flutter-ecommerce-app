@@ -15,7 +15,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized(); // S'assurer que les bindings sont initialisés
   await Firebase.initializeApp(
-    name: 'EcommerceApp',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
