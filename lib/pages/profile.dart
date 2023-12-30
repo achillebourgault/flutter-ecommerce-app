@@ -48,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
       backgroundColor: Colors.green,
     ));
 
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
   }
 
   void _navigateUser(BuildContext context) async {
@@ -81,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(builder: (context) => HomePage()),
           ),
         ),
       ),

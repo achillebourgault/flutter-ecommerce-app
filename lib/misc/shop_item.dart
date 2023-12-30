@@ -29,6 +29,15 @@ class ShopItem {
     );
   }
 
+  Map toJson() => {
+    'id': id,
+    'title': title,
+    'description': description,
+    'images': [{'url': imageUrl}],
+    'price': price,
+    'collection': category
+  };
+
   static Future<List<ShopItem>> getItems() async {
     
     var url = Uri.parse("http://15.237.20.86:3000/v2/products/getAll");

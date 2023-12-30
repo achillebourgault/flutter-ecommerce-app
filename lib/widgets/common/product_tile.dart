@@ -1,6 +1,6 @@
 import 'package:ecommerce_app/misc/shop_item.dart';
 import 'package:ecommerce_app/pages/product_detail.dart';
-import 'package:ecommerce_app/redux/shop_items.dart';
+import 'package:ecommerce_app/redux/store.dart';
 import 'package:ecommerce_app/widgets/common/product_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -23,7 +23,7 @@ class _ProductTileState extends State<ProductTile> {
     return SizedBox(
       width: 150.0,
       height: 216.0,
-      child: StoreConnector<ShopItemState, ShopItem?>(
+      child: StoreConnector<ShopState, ShopItem?>(
         converter: (store) {
           try {
             return store.state.items.firstWhere((element) => (element.id == widget.id));

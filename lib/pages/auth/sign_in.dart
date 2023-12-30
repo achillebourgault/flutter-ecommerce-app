@@ -20,7 +20,7 @@ class SignInPage extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back), // Go to home page
           onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(builder: (context) => HomePage()),
           ),
         ),
       ),
@@ -92,7 +92,7 @@ class SignInPage extends StatelessWidget {
 
                       // Redirection vers la page d'accueil
                       Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => const HomePage()),
+                        MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     } on FirebaseAuthException catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -110,7 +110,7 @@ class SignInPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => SignUpPage(),
                     ));
                   },

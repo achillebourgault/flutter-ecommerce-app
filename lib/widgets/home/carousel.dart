@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/misc/shop_item.dart';
-import 'package:ecommerce_app/redux/shop_items.dart';
+import 'package:ecommerce_app/redux/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -30,7 +30,7 @@ class _CarouselState extends State<Carousel> {
           ),
           SizedBox(
             height: 200.0,
-            child: StoreConnector<ShopItemState, List<ShopItem>>(
+            child: StoreConnector<ShopState, List<ShopItem>>(
               converter: (store) {
                 List<ShopItem> items = store.state.items.where((element) => element.category == widget.categoryName).toList();
                 items.shuffle();
