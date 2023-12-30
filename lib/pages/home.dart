@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/home/carousel.dart';
 import 'package:ecommerce_app/widgets/home/category_buttons.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:localstorage/localstorage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth/sign_in.dart';
 import 'auth/sign_up_details.dart';
