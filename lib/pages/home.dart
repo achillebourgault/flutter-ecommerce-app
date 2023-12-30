@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:ecommerce_app/misc/shop_item.dart';
+import 'package:ecommerce_app/misc/shop_user.dart';
+import 'package:ecommerce_app/misc/string_extension.dart';
 import 'package:ecommerce_app/redux/store.dart';
+import 'package:ecommerce_app/widgets/common/clickable_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/home/carousel.dart';
 import 'package:ecommerce_app/widgets/home/category_buttons.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth/sign_in.dart';
-import 'auth/sign_up_details.dart';
 import 'package:ecommerce_app/pages/profile.dart';
 
 import 'cart.dart';
@@ -19,35 +23,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void _navigateUser(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userID');
-    bool signUpEditingMode = prefs.getBool('signUpEditingMode') ?? false;
+  @override
+  void initState() {
+    super.initState();
 
-    if (userId != null && userId.isNotEmpty) {
-      if (signUpEditingMode) {
-        // Rediriger l'utilisateur vers SignupDetails
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => SignupDetails()),
-        );
+    SharedPreferences.getInstance().then((prefs) {
+      String? userId = prefs.getString('userID');
+      // dispatch action to set userId in store
+      if (userId != null) {
+        ShopUser.getFromId(userId).then((user) {
+          StoreProvider.of<ShopState>(context).dispatch(SetUserAction(user));
+        });
       } else {
-        // L'utilisateur est connecté et signUpEditingMode est false
-        // Rediriger vers HomePage (ou une autre page, selon la logique de l'application)
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const ProfilePage()),
-        );
+        StoreProvider.of<ShopState>(context).dispatch(ClearUserAction());
       }
-    } else {
-      // Pas d'utilisateur connecté, naviguer vers SignInPage
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => SignInPage()),
-      );
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -69,10 +63,38 @@ class _HomePageState extends State<HomePage> {
                   : const Icon(Icons.shopping_cart),
             ),
           ),
-          IconButton(
-            onPressed: () => _navigateUser(context),
-            icon: const Icon(Icons.person),
+          StoreConnector<ShopState, ShopUser?>(
+            converter: (store) => store.state.user,
+            builder: (context, user) => user == null
+            ? IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SignInPage()),
+                  );
+                },
+                icon: const Icon(Icons.person),
+              )
+            : SizedBox(
+                width: 30,
+                height: 30,
+                child: ClickableAvatar(
+                  image: user.profilePictureBase64 != null ? MemoryImage(base64Decode(user.profilePictureBase64!)) : null,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const ProfilePage()),
+                    );
+                  },
+                  child: user.profilePictureBase64 == null
+                    ? Container(
+                      color: Colors.blueGrey,
+                      alignment: Alignment.center,
+                      child: Text(user.fullname.getInitials(), style: const TextStyle(color: Colors.white)),
+                    )
+                    : null,
+                )
+              )
           ),
+          const SizedBox(width: 10)
         ],
       ),
       body: SafeArea(

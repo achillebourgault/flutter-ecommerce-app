@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyBkbLPLaplVcad2z3cU2huxQbNEtyYn0lc</string>
+	<string>AIzaSyCruo-FDAa1JjaU0hokCuRKWCbxPEYNvwE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>477058641131</string>
+	<string>332358911795</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.ecommerceApp</string>
+	<string>fr.imnibis.EcommerceApp</string>
 	<key>PROJECT_ID</key>
-	<string>flutter-ecommerce-api</string>
+	<string>ecommerce-storage-api</string>
 	<key>STORAGE_BUCKET</key>
-	<string>flutter-ecommerce-api.appspot.com</string>
+	<string>ecommerce-storage-api.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:477058641131:ios:b7126acc64d4f60f7c62ae</string>
+	<string>1:332358911795:ios:65b2a90fd4bc467ccde046</string>
 </dict>
 </plist>

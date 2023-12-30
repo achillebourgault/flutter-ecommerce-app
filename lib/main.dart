@@ -15,7 +15,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized(); // S'assurer que les bindings sont initialisés
   await Firebase.initializeApp(
-    name: 'EcommerceApp',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -49,7 +48,7 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: HomePage(),
+        home: const HomePage(),
       ),
     );
   }

@@ -1,5 +1,8 @@
+import 'package:ecommerce_app/misc/shop_user.dart';
+import 'package:ecommerce_app/redux/store.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../home.dart';
 import 'sign_up_details.dart';
@@ -20,9 +23,9 @@ class SignUpPage extends StatelessWidget {
         title: const Text('Sign Up'),
         backgroundColor: mainColor,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => const HomePage()),
           ),
         ),
       ),
@@ -44,9 +47,9 @@ class SignUpPage extends StatelessWidget {
                   controller: emailController,
                   style: const TextStyle(color: Colors.white),
                   cursorColor: mainColor,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Email',
-                    labelStyle: const TextStyle(color: Colors.white),
+                    labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
@@ -54,7 +57,7 @@ class SignUpPage extends StatelessWidget {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
-                    prefixIcon: const Icon(Icons.email, color: Colors.white),
+                    prefixIcon: Icon(Icons.email, color: Colors.white),
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -64,9 +67,9 @@ class SignUpPage extends StatelessWidget {
                   controller: passwordController,
                   style: const TextStyle(color: Colors.white),
                   cursorColor: mainColor,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
-                    labelStyle: const TextStyle(color: Colors.white),
+                    labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
@@ -74,7 +77,7 @@ class SignUpPage extends StatelessWidget {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
-                    prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                    prefixIcon: Icon(Icons.lock, color: Colors.white),
                   ),
                   obscureText: true,
                 ),
@@ -84,9 +87,9 @@ class SignUpPage extends StatelessWidget {
                   controller: confirmPasswordController,
                   style: const TextStyle(color: Colors.white),
                   cursorColor: mainColor,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Confirm Password',
-                    labelStyle: const TextStyle(color: Colors.white),
+                    labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
@@ -94,49 +97,44 @@ class SignUpPage extends StatelessWidget {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
                     ),
-                    prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                    prefixIcon: Icon(Icons.lock, color: Colors.white),
                   ),
                   obscureText: true,
                 ),
                 // Sign up button
                 const SizedBox(height: 30),
                 ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () {
                     if (passwordController.text.trim() == confirmPasswordController.text.trim()) {
-                      try {
-                        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                        );
+                      FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                      ).then((userCredential) {
+                        SharedPreferences.getInstance().then((prefs) {
+                          prefs.setString('userID', userCredential.user!.uid).then((_) {
+                            prefs.setBool('signUpEditingMode', true).then((_) {
+                              ShopUser.getFromId(userCredential.user!.uid).then((user) {
+                                StoreProvider.of<ShopState>(context).dispatch(SetUserAction(user));
 
-                        SharedPreferences prefs = await SharedPreferences.getInstance();
-                        await prefs.setString('userID', userCredential.user!.uid);
-                        await prefs.setBool('signUpEditingMode', true);
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  content: Text('Account created successfully.'),
+                                  backgroundColor: Colors.green,
+                                ));
 
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: const Text('Account created successfully.'),
-                          backgroundColor: Colors.green,
-                        ));
-
-                        // Redirection vers la page SignupDetails
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context) => SignupDetails()),
-                        );
-                      } on FirebaseAuthException catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(e.message ?? 'An error occurred'),
-                          backgroundColor: Colors.red,
-                        ));
-                      }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Passwords do not match'),
-                        backgroundColor: Colors.red,
-                      ));
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(builder: (context) => const SignupDetails()),
+                                );
+                              });
+                            });
+                          });
+                        });
+                      }).catchError((e) {
+                        // Handle FirebaseAuthException
+                      });
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: mainColor,
+                    backgroundColor: mainColor,
                     padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   ),
                   child: const Text('Sign Up', style: TextStyle(color: Colors.white)),

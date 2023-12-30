@@ -5,15 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../profile.dart';
-
 const mainColor = Colors.white70;
 
 class AdminIndexPage extends StatefulWidget {
   const AdminIndexPage({Key? key}) : super(key: key);
 
   @override
-  _AdminIndexPageState createState() => _AdminIndexPageState();
+  State<AdminIndexPage> createState() => _AdminIndexPageState();
 }
 
 class _AdminIndexPageState extends State<AdminIndexPage> {
@@ -72,7 +70,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
       child: Card(
         color: mainColor,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
           child: Stack(
             children: [
               Align(
@@ -82,19 +80,19 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
                       ),
                     ),
-                    Divider(
+                    const Divider(
                         color: Color.fromARGB(61, 127, 151, 255),
                         thickness: 2.5,
                     ),
                     Text(
                       '$count',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 42,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
@@ -104,7 +102,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                   ],
                 ),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.bottomRight,
                 child: Text(
                   'Tap to manage',
@@ -127,39 +125,31 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Area', style: TextStyle(color: Colors.black87)),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const ProfilePage()),
-          ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: ListView(
+          children: [
+            Text(
+              'Welcome $adminName',
+              style: const TextStyle(fontSize: 22, fontStyle: FontStyle.italic, fontWeight: FontWeight.w100, color: Colors.black87),
+            ),
+            const SizedBox(height: 20),
+            isLoading
+                ? const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white70)))
+                : _buildStatCard('Products', productCount, () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AdminProductsIndex()));
+            }),
+            const SizedBox(height: 20),
+            isLoading
+                ? const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white70)))
+                : _buildStatCard('Users', userCount, () { // Update userCount
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AdminUsersPage()));
+            }),
+          ],
         ),
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: ListView(
-            children: [
-              Text(
-                'Welcome $adminName',
-                style: TextStyle(fontSize: 22, fontStyle: FontStyle.italic, fontWeight: FontWeight.w100, color: Colors.black87),
-              ),
-              const SizedBox(height: 20),
-              isLoading
-                  ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white70)))
-                  : _buildStatCard('Products', productCount, () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminProductsIndex()));
-              }),
-              const SizedBox(height: 20),
-              isLoading
-                  ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white70)))
-                  : _buildStatCard('Users', userCount, () { // Update userCount
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => AdminUsersPage()));
-              }),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: const BottomAppBar(
         color: Colors.black87,
         child: Row(
           children: <Widget>[

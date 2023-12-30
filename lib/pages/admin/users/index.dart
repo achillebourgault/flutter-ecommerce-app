@@ -1,11 +1,11 @@
-import 'package:ecommerce_app/pages/admin/index.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AdminUsersPage extends StatefulWidget {
+  const AdminUsersPage({Key? key}) : super(key: key);
   @override
-  _AdminUsersPageState createState() => _AdminUsersPageState();
+  State<AdminUsersPage> createState() => _AdminUsersPageState();
 }
 
 class _AdminUsersPageState extends State<AdminUsersPage> {
@@ -36,14 +36,10 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Users'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminIndexPage()))
-        ),
+        title: const Text('Users'),
       ),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
         itemCount: users.length,
         itemBuilder: (context, index) {
@@ -56,12 +52,12 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
               title: Row(
                 children: [
                   Text(user['fullname']),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   if (user['isAdmin'])
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                       color: Colors.red,
-                      child: Text('ADMIN', style: TextStyle(color: Colors.white, fontSize: 12)),
+                      child: const Text('ADMIN', style: TextStyle(color: Colors.white, fontSize: 12)),
                     ),
                 ],
               ),
