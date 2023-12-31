@@ -1,17 +1,20 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../home.dart';
-import 'package:path/path.dart' as path;
+import '../../misc/shop_user.dart';
+import '../../redux/store.dart';
 
 import 'package:dio/dio.dart';
 
 class SignupDetails extends StatefulWidget {
+  const SignupDetails({Key? key}) : super(key: key);
   @override
-  _SignupDetailsState createState() => _SignupDetailsState();
+  State<SignupDetails> createState() => _SignupDetailsState();
 }
 
 class _SignupDetailsState extends State<SignupDetails> {
@@ -32,57 +35,65 @@ class _SignupDetailsState extends State<SignupDetails> {
     }
   }
 
-  Future<void> _verifyAccessCode() async {
-    var response = await http.get(Uri.parse('http://15.237.20.86:3000/auth/checkAdminAccessCode?key=${accessCodeController.text}'));
-
-    if (response.statusCode == 200 && json.decode(response.body)['valid']) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Access code valid'),
-        backgroundColor: Colors.green,
-      ));
-      setState(() {
-        isAdmin = true;
-      });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Invalid access code'),
-        backgroundColor: Colors.red,
-      ));
-    }
-  }
-
-  Future<void> _updateProfileDetails() async {
-    var userId = await SharedPreferences.getInstance().then((prefs) => prefs.getString('userID'));
-    var dio = Dio();
-    var uri = 'http://15.237.20.86:3000/auth/setUserDetails/$userId';
-
-    try {
-      var response = await dio.post(uri, data: {
-        'fullname': nameController.text,
-        'profilePicture': 'test',
-        'isAdmin': isAdmin,
-      });
-
-      if (response.statusCode == 200) {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setBool('signUpEditingMode', false);
-
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('User details updated'),
+  void _verifyAccessCode() {
+    http.get(Uri.parse('http://15.237.20.86:3000/auth/checkAdminAccessCode?key=${accessCodeController.text}')).then((response) {
+      if (response.statusCode == 200 && json.decode(response.body)['valid']) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Access code valid'),
+          backgroundColor: Colors.green,
         ));
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomePage()));
+        setState(() {
+          isAdmin = true;
+        });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Error updating profile details: ${response.data}'),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Invalid access code'),
           backgroundColor: Colors.red,
         ));
       }
-    } on DioError catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Dio error: ${e.response?.data.toString() ?? e.message}'),
-        backgroundColor: Colors.red,
-      ));
-    }
+    });
+  }
+
+  _updateProfileDetails() {
+    SharedPreferences.getInstance().then((prefs) => prefs.getString('userID')).then((userId) {
+      var dio = Dio();
+      var uri = 'http://15.237.20.86:3000/auth/setUserDetails/$userId';
+
+      if (_imageBase64 != null) {
+        FirebaseStorage storage = FirebaseStorage.instance;
+        storage.ref().child('profilePictures/$userId').putData(base64Decode(_imageBase64!));
+      }
+
+      try {
+        dio.post(uri, data: {
+          'fullname': nameController.text,
+          'profilePicture': 'unused field',
+          'isAdmin': isAdmin,
+        }).then((response) {
+
+          if (response.statusCode == 200) {
+            SharedPreferences.getInstance().then((prefs) => prefs.setBool('signUpEditingMode', false));
+            ShopUser.getFromId(userId!).then((user) {
+              StoreProvider.of<ShopState>(context).dispatch(SetUserAction(user));
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('User details updated'),
+              ));
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            });
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text('Error updating profile details: ${response.data}'),
+              backgroundColor: Colors.red,
+            ));
+          }
+        });
+      } on DioException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Dio error: ${e.response?.data.toString() ?? e.message}'),
+          backgroundColor: Colors.red,
+        ));
+      }
+    });
   }
 
 
@@ -96,12 +107,14 @@ class _SignupDetailsState extends State<SignupDetails> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            GestureDetector(
+            InkWell(
+              borderRadius: const BorderRadius.all(Radius.circular(50)),
               onTap: _pickImage,
               child: CircleAvatar(
                 radius: 50,
                 backgroundImage: _imageBase64 != null ? MemoryImage(base64Decode(_imageBase64!)) : null,
-                child: _imageBase64 == null ? const Icon(Icons.camera_alt, size: 50) : null,
+                child: 
+                _imageBase64 == null ? const Icon(Icons.camera_alt, size: 50) : null,
               ),
             ),
             const SizedBox(height: 20),
