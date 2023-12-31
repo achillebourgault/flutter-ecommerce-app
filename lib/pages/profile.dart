@@ -142,8 +142,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 if (isAdmin)
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                      onPrimary: Colors.white,
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
                       textStyle: const TextStyle(fontSize: 17),
                       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
                     ),
@@ -157,8 +157,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(height: 12),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.redAccent,
-                    onPrimary: Colors.white,
+                    backgroundColor: Colors.redAccent,
+                    foregroundColor: Colors.white,
                     textStyle: const TextStyle(fontSize: 17),
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
                   ),

@@ -84,7 +84,7 @@ class CheckoutPage extends StatelessWidget {
                   children: [
                     Text('Item Total: ${total.toStringAsFixed(2)}'),
                     const SizedBox(height: 10),
-                    Text('Grand Total', style: TextStyle(fontWeight: FontWeight.bold)),
+                    const Text('Grand Total', style: TextStyle(fontWeight: FontWeight.bold)),
                     Text('\$${total.toStringAsFixed(2)}'),
                   ],
                 );
@@ -93,8 +93,8 @@ class CheckoutPage extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                onPrimary: Colors.white,
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
                 textStyle: const TextStyle(fontSize: 17),
                 padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 18),
               ),

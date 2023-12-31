@@ -18,8 +18,8 @@ class ItemCategoryButton extends StatelessWidget {
       child: FilledButton.tonal(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          primary: Color.fromRGBO(1, 1, 1, 0.98),
-          onPrimary: Colors.white,
+          backgroundColor: const Color.fromRGBO(1, 1, 1, 0.98),
+          foregroundColor: Colors.white,
           textStyle: const TextStyle(fontSize: 17),
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 22),
         ),

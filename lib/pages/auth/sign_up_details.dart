@@ -151,8 +151,8 @@ class _SignupDetailsState extends State<SignupDetails> {
               const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromRGBO(210, 210, 210, 1.0),
-                  onPrimary: Colors.black,
+                  backgroundColor: const Color.fromRGBO(210, 210, 210, 1.0),
+                  foregroundColor: Colors.black,
                   textStyle: const TextStyle(fontSize: 17),
                   padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
                 ),
@@ -163,8 +163,8 @@ class _SignupDetailsState extends State<SignupDetails> {
             const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.black,
-                onPrimary: Colors.white,
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
                 textStyle: const TextStyle(fontSize: 17),
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
               ),

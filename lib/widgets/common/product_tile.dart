@@ -36,7 +36,7 @@ class _ProductTileState extends State<ProductTile> {
             enabled: item == null,
             child: Card(
               clipBehavior: Clip.antiAlias,
-              color: Color.fromRGBO(245, 245, 245, 1.0),
+              color: const Color.fromRGBO(245, 245, 245, 1.0),
               child: InkWell(
                 onTap: () {
                   if (item != null) {

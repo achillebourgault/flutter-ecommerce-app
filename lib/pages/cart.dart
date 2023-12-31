@@ -107,8 +107,8 @@ class _CartPageState extends State<CartPage> {
                 const SizedBox(width: 16.0),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    onPrimary: Colors.white,
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
                     textStyle: const TextStyle(fontSize: 17),
                     padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 18),
                   ),

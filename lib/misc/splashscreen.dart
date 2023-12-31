@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../pages/home.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
@@ -15,19 +16,19 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   void initState() {
     super.initState();
 
-    _controller = AnimationController(vsync: this, duration: Duration(seconds: 3))
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 3))
       ..forward();
 
     _initDotAnimations();
 
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomePage()));
     });
   }
 
   void _initDotAnimations() {
     _dotControllers = List.generate(3, (index) =>
-        AnimationController(vsync: this, duration: Duration(seconds: 1))
+        AnimationController(vsync: this, duration: const Duration(seconds: 1))
     );
 
     _dotAnimations = _dotControllers.map((controller) =>
@@ -44,7 +45,9 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
   @override
   void dispose() {
     _controller.dispose();
-    _dotControllers.forEach((controller) => controller.dispose());
+    for (var controller in _dotControllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 
@@ -54,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Center(
+          const Center(
             child: Text(
               'EcommerceAPP',
               style: TextStyle(fontSize: 27.0, color: Color.fromRGBO(255, 221, 124, 1), fontWeight: FontWeight.bold),
@@ -79,10 +82,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       animation: _dotControllers[index],
       builder: (context, child) {
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 8),
           width: 15,
           height: 15,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
           ),

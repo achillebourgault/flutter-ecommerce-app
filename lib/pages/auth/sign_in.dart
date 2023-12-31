@@ -41,17 +41,17 @@ class SignInPage extends StatelessWidget {
                   controller: emailController,
                   style: const TextStyle(color: Colors.black),
                   cursorColor: mainColor,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Email',
                     labelStyle: TextStyle(color: Colors.black),
-                    border: const OutlineInputBorder(),
-                    enabledBorder: const OutlineInputBorder(
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
                     ),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                     ),
-                    prefixIcon: const Icon(Icons.email, color: Colors.black),
+                    prefixIcon: Icon(Icons.email, color: Colors.black),
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -60,17 +60,17 @@ class SignInPage extends StatelessWidget {
                   controller: passwordController,
                   style: const TextStyle(color: Colors.black),
                   cursorColor: mainColor,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password',
                     labelStyle: TextStyle(color: Colors.black),
-                    border: const OutlineInputBorder(),
-                    enabledBorder: const OutlineInputBorder(
+                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
                     ),
-                    focusedBorder: const OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black),
                     ),
-                    prefixIcon: const Icon(Icons.lock, color: Colors.black),
+                    prefixIcon: Icon(Icons.lock, color: Colors.black),
                   ),
                   obscureText: true,
                 ),

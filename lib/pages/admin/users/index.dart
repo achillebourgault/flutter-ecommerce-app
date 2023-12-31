@@ -55,7 +55,7 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
         itemBuilder: (context, index) {
           var user = users[index];
           return Card(
-            color: Color.fromRGBO(245, 245, 245, 1.0),
+            color: const Color.fromRGBO(245, 245, 245, 1.0),
             margin: const EdgeInsets.only(bottom: 12.0),
             child: ListTile(
               leading: user.profilePictureBase64 != null && user.profilePictureBase64!.isNotEmpty

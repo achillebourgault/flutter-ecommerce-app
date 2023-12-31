@@ -114,7 +114,7 @@ class _AdminProductsIndexState extends State<AdminProductsIndex> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              backgroundColor: Color.fromRGBO(245, 245, 245, 1.0),
+              backgroundColor: const Color.fromRGBO(245, 245, 245, 1.0),
               title: const Text('Edit Product'),
               content: SingleChildScrollView(
                 child: ListBody(
@@ -181,8 +181,8 @@ class _AdminProductsIndexState extends State<AdminProductsIndex> {
               actions: <Widget>[
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    onPrimary: Colors.white,
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
                   ),
                     child: const Text('Cancel'),
                     onPressed: () {
@@ -244,7 +244,7 @@ class _AdminProductsIndexState extends State<AdminProductsIndex> {
             return GestureDetector(
               onTap: () => _showEditProductDialog(product),
               child: Card(
-                color: Color.fromRGBO(245, 245, 245, 1.0),
+                color: const Color.fromRGBO(245, 245, 245, 1.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
