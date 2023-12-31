@@ -20,24 +20,22 @@ class ProductsPage extends StatelessWidget {
         child: StoreConnector<ShopState, List<ShopItem>>(
           converter: (Store<ShopState> store) {
             if (filter == null) {
-              // Retrieve the list of ShopItems
               return store.state.items;
             }
-            // Retrieve the list of ShopItems based on the requested category
             return store.state.items.where((item) => item.category == filter?.toLowerCase()).toList();
           },
           builder: (BuildContext context, List<ShopItem> shopItems) {
-            // Build the UI based on the retrieved list of ShopItems
             return GridView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              itemCount: shopItems.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.8,
+                childAspectRatio: 0.75,
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,
               ),
               itemBuilder: (BuildContext context, int index) {
-                return index < shopItems.length ? ProductTile(id: shopItems[index].id, isHomePage: false) : null;
+                return ProductTile(id: shopItems[index].id, isHomePage: false);
               },
             );
           },

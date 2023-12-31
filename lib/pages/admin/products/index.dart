@@ -114,6 +114,7 @@ class _AdminProductsIndexState extends State<AdminProductsIndex> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
+              backgroundColor: Color.fromRGBO(245, 245, 245, 1.0),
               title: const Text('Edit Product'),
               content: SingleChildScrollView(
                 child: ListBody(
@@ -178,11 +179,15 @@ class _AdminProductsIndexState extends State<AdminProductsIndex> {
                 ),
               ),
               actions: <Widget>[
-                TextButton(
-                  child: const Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.black,
+                    onPrimary: Colors.white,
+                  ),
+                    child: const Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -195,7 +200,7 @@ class _AdminProductsIndexState extends State<AdminProductsIndex> {
                     };
                     _updateProduct(product['id'], updatedProduct);
                   },
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
                   child: const Text('Save', style: TextStyle(color: Colors.white)),
                 ),
                 ElevatedButton(
@@ -239,7 +244,7 @@ class _AdminProductsIndexState extends State<AdminProductsIndex> {
             return GestureDetector(
               onTap: () => _showEditProductDialog(product),
               child: Card(
-                color: Colors.lightBlue[50],
+                color: Color.fromRGBO(245, 245, 245, 1.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[

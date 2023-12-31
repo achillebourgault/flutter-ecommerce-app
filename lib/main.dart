@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/misc/splashscreen.dart';
 import 'package:ecommerce_app/pages/home.dart';
 import 'package:ecommerce_app/redux/store.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const HomePage(),
+        home: SplashScreen(),
       ),
     );
   }

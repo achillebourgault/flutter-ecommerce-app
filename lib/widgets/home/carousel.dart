@@ -26,8 +26,9 @@ class _CarouselState extends State<Carousel> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 10.0),
-            child: Text("Featured ${widget.categoryName}", style: Theme.of(context).textTheme.headlineSmall)
+            child: Text("Featured ${widget.categoryName}", style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
           ),
+          const SizedBox(height: 10.0),
           SizedBox(
             height: 200.0,
             child: StoreConnector<ShopState, List<ShopItem>>(

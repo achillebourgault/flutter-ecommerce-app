@@ -64,6 +64,12 @@ class ProductDetailPage extends StatelessWidget {
             ),
             const SizedBox(width: 16.0),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+                onPrimary: Colors.white,
+                textStyle: const TextStyle(fontSize: 17),
+                padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 18),
+              ),
               onPressed: () {
                 StoreProvider.of<ShopState>(context).dispatch(AddToCartAction(item));
                 ScaffoldMessenger.of(context).showSnackBar(

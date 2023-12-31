@@ -36,6 +36,7 @@ class _ProductTileState extends State<ProductTile> {
             enabled: item == null,
             child: Card(
               clipBehavior: Clip.antiAlias,
+              color: Color.fromRGBO(245, 245, 245, 1.0),
               child: InkWell(
                 onTap: () {
                   if (item != null) {
@@ -49,7 +50,7 @@ class _ProductTileState extends State<ProductTile> {
                       child: ProductImage(imageUrl: item?.imageUrl),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -62,13 +63,13 @@ class _ProductTileState extends State<ProductTile> {
                           ),
                           Text("\$${item?.price ?? "100"}",
                               style:
-                                  const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+                              const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     )
                   ],
                 ),
-              ),
+              )
             ),
           );
         },

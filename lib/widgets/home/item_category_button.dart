@@ -14,9 +14,15 @@ class ItemCategoryButton extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.only(left: 5.0, right:5.0),
+      padding: const EdgeInsets.only(left: 5.0, right:5.0, top: 10.0),
       child: FilledButton.tonal(
         onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          primary: Color.fromRGBO(1, 1, 1, 0.98),
+          onPrimary: Colors.white,
+          textStyle: const TextStyle(fontSize: 17),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 22),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

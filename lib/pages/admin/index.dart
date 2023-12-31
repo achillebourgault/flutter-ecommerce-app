@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-const mainColor = Colors.white70;
+const mainColor = Color.fromRGBO(245, 245, 245, 1.0);
 
 class AdminIndexPage extends StatefulWidget {
   const AdminIndexPage({Key? key}) : super(key: key);
@@ -81,13 +81,13 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                     Text(
                       title,
                       style: const TextStyle(
-                        fontSize: 21,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
                       ),
                     ),
                     const Divider(
-                        color: Color.fromARGB(61, 127, 151, 255),
+                        color: Colors.black12,
                         thickness: 2.5,
                     ),
                     Text(
@@ -96,7 +96,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                         fontSize: 42,
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.italic,
-                        color: Colors.black87,
+                        color: Colors.black38,
                       ),
                     ),
                   ],
@@ -108,8 +108,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
                   'Tap to manage',
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -132,7 +131,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
           children: [
             Text(
               'Welcome $adminName',
-              style: const TextStyle(fontSize: 22, fontStyle: FontStyle.italic, fontWeight: FontWeight.w100, color: Colors.black87),
+              style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w300, color: Colors.black87),
             ),
             const SizedBox(height: 20),
             isLoading
@@ -148,41 +147,7 @@ class _AdminIndexPageState extends State<AdminIndexPage> {
             }),
           ],
         ),
-      ),
-      bottomNavigationBar: const BottomAppBar(
-        color: Colors.black87,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 8,
-              child: TextField(
-                style: TextStyle(color: Colors.white70),
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  hintStyle: TextStyle(color: Colors.white70),
-                  prefixIcon: Icon(Icons.search, color: Colors.white70),
-                  fillColor: Colors.black54,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.all(Radius.circular(100.0)),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Icon(Icons.shopping_cart, color: Colors.white70),
-                  Icon(Icons.person, color: Colors.white70),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      )
     );
   }
 }

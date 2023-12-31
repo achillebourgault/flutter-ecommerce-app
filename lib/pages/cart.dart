@@ -106,11 +106,17 @@ class _CartPageState extends State<CartPage> {
                 ),
                 const SizedBox(width: 16.0),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.black,
+                    onPrimary: Colors.white,
+                    textStyle: const TextStyle(fontSize: 17),
+                    padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 18),
+                  ),
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const CheckoutPage()));
                   },
                   child: const Text('Checkout'),
-                ),
+                )
               ],
             ),
           ) : null,

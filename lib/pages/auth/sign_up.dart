@@ -14,14 +14,14 @@ class SignUpPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
-  static const Color mainColor = Colors.teal;
+  static const Color mainColor = Colors.grey;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Sign Up'),
-        backgroundColor: mainColor,
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pushReplacement(
@@ -30,7 +30,7 @@ class SignUpPage extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: Colors.black,
+        color: Colors.white, // Fond changé en blanc
         padding: const EdgeInsets.all(20.0),
         child: Center(
           child: SingleChildScrollView(
@@ -39,25 +39,25 @@ class SignUpPage extends StatelessWidget {
               children: [
                 const Text(
                   'Join Us!',
-                  style: TextStyle(fontSize: 24, color: Colors.white),
+                  style: TextStyle(fontSize: 27, color: Colors.black, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 40),
                 // Email field
                 TextField(
                   controller: emailController,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   cursorColor: mainColor,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Email',
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
                     ),
-                    prefixIcon: Icon(Icons.email, color: Colors.white),
+                    prefixIcon: const Icon(Icons.email, color: Colors.black),
                   ),
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -65,19 +65,19 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextField(
                   controller: passwordController,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   cursorColor: mainColor,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
                     ),
-                    prefixIcon: Icon(Icons.lock, color: Colors.white),
+                    prefixIcon: const Icon(Icons.lock, color: Colors.black),
                   ),
                   obscureText: true,
                 ),
@@ -85,19 +85,19 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextField(
                   controller: confirmPasswordController,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   cursorColor: mainColor,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Confirm Password',
-                    labelStyle: TextStyle(color: Colors.white),
-                    border: OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: mainColor),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                    focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
                     ),
-                    prefixIcon: Icon(Icons.lock, color: Colors.white),
+                    prefixIcon: const Icon(Icons.lock, color: Colors.black),
                   ),
                   obscureText: true,
                 ),
@@ -105,6 +105,14 @@ class SignUpPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () {
+                    if (passwordController.text.trim() != confirmPasswordController.text.trim()) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Passwords do not match'),
+                        backgroundColor: Colors.red,
+                      ));
+                      return;
+                    }
+
                     if (passwordController.text.trim() == confirmPasswordController.text.trim()) {
                       FirebaseAuth.instance.createUserWithEmailAndPassword(
                         email: emailController.text.trim(),
@@ -129,13 +137,16 @@ class SignUpPage extends StatelessWidget {
                           });
                         });
                       }).catchError((e) {
-                        // Handle FirebaseAuthException
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(e.message ?? 'An error occurred'),
+                          backgroundColor: Colors.red,
+                        ));
                       });
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: mainColor,
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    backgroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
                   ),
                   child: const Text('Sign Up', style: TextStyle(color: Colors.white)),
                 ),
@@ -147,11 +158,11 @@ class SignUpPage extends StatelessWidget {
                       builder: (context) => SignInPage(),
                     ));
                   },
-                  child: const Text('Already have an account? Sign In', style: TextStyle(color: Colors.white)),
+                  child: const Text('Already have an account? Sign In', style: TextStyle(color: Colors.black)),
                 ),
                 // Divider
                 const SizedBox(height: 5),
-                Divider(color: Colors.white, thickness: 2, endIndent: MediaQuery.of(context).size.width * 0.2, indent: MediaQuery.of(context).size.width * 0.2),
+                Divider(color: Colors.grey, thickness: 2, endIndent: MediaQuery.of(context).size.width * 0.2, indent: MediaQuery.of(context).size.width * 0.2),
               ],
             ),
           ),

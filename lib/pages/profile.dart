@@ -139,12 +139,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _disconnectUser,
-                  child: const Text('Disconnect'),
-                ),
                 if (isAdmin)
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      onPrimary: Colors.white,
+                      textStyle: const TextStyle(fontSize: 17),
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
+                    ),
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => const AdminIndexPage()),
@@ -152,6 +154,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     child: const Text('Admin Area'),
                   ),
+                const SizedBox(height: 12),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.redAccent,
+                    onPrimary: Colors.white,
+                    textStyle: const TextStyle(fontSize: 17),
+                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
+                  ),
+                  onPressed: _disconnectUser,
+                  child: const Text('Disconnect'),
+                ),
               ],
             ),
           ),

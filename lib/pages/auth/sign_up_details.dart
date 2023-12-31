@@ -64,6 +64,14 @@ class _SignupDetailsState extends State<SignupDetails> {
         storage.ref().child('profilePictures/$userId').putData(base64Decode(_imageBase64!));
       }
 
+      if (nameController.text == '') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Please enter your name'),
+          backgroundColor: Colors.red,
+        ));
+        return;
+      }
+
       try {
         dio.post(uri, data: {
           'fullname': nameController.text,
@@ -95,7 +103,6 @@ class _SignupDetailsState extends State<SignupDetails> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -141,15 +148,28 @@ class _SignupDetailsState extends State<SignupDetails> {
                 controller: accessCodeController,
                 decoration: const InputDecoration(labelText: 'Access Code'),
               ),
+              const SizedBox(height: 20),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color.fromRGBO(210, 210, 210, 1.0),
+                  onPrimary: Colors.black,
+                  textStyle: const TextStyle(fontSize: 17),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
+                ),
                 onPressed: _verifyAccessCode,
-                child: const Text('Verify Code'),
+                child: const Text('Verify code'),
               ),
             ],
             const SizedBox(height: 20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black,
+                onPrimary: Colors.white,
+                textStyle: const TextStyle(fontSize: 17),
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 22),
+              ),
               onPressed: _updateProfileDetails,
-              child: const Text('Update Profile Details'),
+              child: const Text('Update profile details'),
             ),
           ],
         ),

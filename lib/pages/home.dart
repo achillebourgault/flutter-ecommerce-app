@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text('EcommerceAPP'),
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -110,6 +110,7 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: const <Widget>[
             CategoryButtons(),
+            SizedBox(height: 22),
             Carousel(categoryName: "men's clothing"),
             Carousel(categoryName: "women's clothing"),
             Carousel(categoryName: "jewelery"),
