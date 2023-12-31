@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 import 'package:ecommerce_app/misc/shop_user.dart';
 import 'package:ecommerce_app/misc/string_extension.dart';
@@ -63,19 +62,19 @@ class _ProfilePageState extends State<ProfilePage> {
   void _pickImage(ShopUser user) {
     ImagePicker().pickImage(source: ImageSource.gallery).then((pickedFile) {
       if (pickedFile != null) {
-        File imageFile = File(pickedFile.path);
-        List<int> imageBytes = imageFile.readAsBytesSync();
-        FirebaseStorage storage = FirebaseStorage.instance;
-        storage.ref().child('profilePictures/${user.id}').putData(Uint8List.fromList(imageBytes)).then((_) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Profile picture updated'),
-          ));
-          StoreProvider.of<ShopState>(context).dispatch(SetUserAction(ShopUser(
-              id: user.id,
-              fullname: user.fullname,
-              profilePictureBase64: base64Encode(imageBytes),
-              isAdmin: user.isAdmin,
-            )));
+        pickedFile.readAsBytes().then((imageBytes) {
+          FirebaseStorage storage = FirebaseStorage.instance;
+          storage.ref().child('profilePictures/${user.id}').putData(Uint8List.fromList(imageBytes)).then((_) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text('Profile picture updated'),
+            ));
+            StoreProvider.of<ShopState>(context).dispatch(SetUserAction(ShopUser(
+                id: user.id,
+                fullname: user.fullname,
+                profilePictureBase64: base64Encode(imageBytes),
+                isAdmin: user.isAdmin,
+              )));
+          });
         });
       }
     });
