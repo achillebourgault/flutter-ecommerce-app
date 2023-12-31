@@ -15,6 +15,25 @@ class ShopUser {
     required this.isAdmin,
   });
 
+  static Future<ShopUser> fromJson(Map<String, dynamic> json) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    String? profilePictureBase64;
+    try {
+      var profilePictureData = await storage.ref().child('profilePictures/${json['id']}').getData();
+      if (profilePictureData != null) {
+        profilePictureBase64 = base64Encode(profilePictureData);
+      }
+    } catch (e) {
+      profilePictureBase64 = null;
+    }
+    return ShopUser(
+      id: json['id'],
+      fullname: json['fullname'],
+      profilePictureBase64: profilePictureBase64,
+      isAdmin: json['isAdmin'],
+    );
+  }
+
   static Future<ShopUser> getFromId(String id) async {
     var response = await http.get(Uri.parse('http://15.237.20.86:3000/auth/getUserDetails/$id'));
     if (response.statusCode == 200) {
@@ -36,7 +55,11 @@ class ShopUser {
         isAdmin: userDetails['isAdmin'],
       );
     } else {
-      throw Exception('Failed to load user');
+      return ShopUser(
+        id: id,
+        fullname: 'Unknown',
+        isAdmin: false,
+      );
     }
   }
 }

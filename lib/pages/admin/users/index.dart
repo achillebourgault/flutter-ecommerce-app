@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/misc/shop_user.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ class AdminUsersPage extends StatefulWidget {
 }
 
 class _AdminUsersPageState extends State<AdminUsersPage> {
-  List<dynamic> users = [];
+  List<ShopUser> users = [];
   bool isLoading = true;
 
   @override
@@ -23,8 +24,13 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
     var url = Uri.parse('http://15.237.20.86:3000/auth/getUsersDetails');
     var response = await http.get(url);
     if (response.statusCode == 200) {
+      for (var userJson in json.decode(response.body)) {
+        ShopUser user = await ShopUser.fromJson(userJson);
+        setState(() {
+          users.add(user);
+        });
+      }
       setState(() {
-        users = json.decode(response.body);
         isLoading = false;
       });
     } else {
@@ -47,13 +53,15 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
           return Card(
             child: ListTile(
               leading: CircleAvatar(
-                backgroundImage: NetworkImage(user['profilePicture']),
+                backgroundImage: user.profilePictureBase64 != null
+                    ? MemoryImage(base64Decode(user.profilePictureBase64!))
+                    : null,
               ),
               title: Row(
                 children: [
-                  Text(user['fullname']),
+                  Text(user.fullname),
                   const SizedBox(width: 8),
-                  if (user['isAdmin'])
+                  if (user.isAdmin)
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                       color: Colors.red,
@@ -61,7 +69,7 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
                     ),
                 ],
               ),
-              subtitle: Text(user['isAdmin'] ? 'Admin' : 'User'),
+              subtitle: Text(user.isAdmin ? 'Admin' : 'User'),
             ),
           );
         },

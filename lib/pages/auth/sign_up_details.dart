@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../misc/shop_user.dart';
 import '../../redux/store.dart';
-import '../home.dart';
 
 import 'package:dio/dio.dart';
 
@@ -79,7 +78,7 @@ class _SignupDetailsState extends State<SignupDetails> {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text('User details updated'),
               ));
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const HomePage()));
+              Navigator.of(context).popUntil((route) => route.isFirst);
             });
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

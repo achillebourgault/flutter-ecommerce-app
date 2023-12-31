@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ecommerce_app/misc/shop_item.dart';
 import 'package:ecommerce_app/misc/shop_user.dart';
 import 'package:ecommerce_app/misc/string_extension.dart';
+import 'package:ecommerce_app/pages/auth/sign_up_details.dart';
 import 'package:ecommerce_app/redux/store.dart';
 import 'package:ecommerce_app/widgets/common/clickable_avatar.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,13 @@ class _HomePageState extends State<HomePage> {
 
     SharedPreferences.getInstance().then((prefs) {
       String? userId = prefs.getString('userID');
+      bool signUpEditingMode = prefs.getBool('signUpEditingMode') ?? false;
+
+      if (signUpEditingMode) {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const SignupDetails()),
+        );
+      }
       // dispatch action to set userId in store
       if (userId != null) {
         ShopUser.getFromId(userId).then((user) {
