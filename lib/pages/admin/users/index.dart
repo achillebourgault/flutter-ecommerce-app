@@ -43,6 +43,10 @@ class _AdminUsersPageState extends State<AdminUsersPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Users'),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const AdminIndexPage()))
+        ),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())

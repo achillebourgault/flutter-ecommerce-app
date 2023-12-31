@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart'; // Assure-toi que ce fichier est correctement importé
+import 'firebase_options.dart';
 
 void main() async {
   final store = Store<ShopState>(
@@ -13,7 +13,7 @@ void main() async {
     middleware: shopItemMiddleware(),
   );
 
-  WidgetsFlutterBinding.ensureInitialized(); // S'assurer que les bindings sont initialisés
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
